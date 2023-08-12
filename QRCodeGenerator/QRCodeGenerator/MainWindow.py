@@ -1,7 +1,8 @@
 import tkinter as tk
 from tkinter import font
-from QRCodeGenerator import config, QRWindow
-from QRCodeGenerator.QRCode import QRCode
+from .QRCode import QRCode
+from . import QRWindow
+from . import config
 
 def clickGenerate(window, urlEntry, filenameEntry):
     url = urlEntry.get()

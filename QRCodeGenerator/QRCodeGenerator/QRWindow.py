@@ -1,5 +1,5 @@
 import tkinter as tk
-from QRCodeGenerator import config
+from . import config
 
 def start(mainWindow, qr):
     
