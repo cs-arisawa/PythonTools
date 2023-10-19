@@ -1,0 +1,9 @@
+setup.py
+ImageRecognition/MainWindow.py
+ImageRecognition/__init__.py
+ImageRecognition/__main__.py
+ImageRecognition.egg-info/PKG-INFO
+ImageRecognition.egg-info/SOURCES.txt
+ImageRecognition.egg-info/dependency_links.txt
+ImageRecognition.egg-info/requires.txt
+ImageRecognition.egg-info/top_level.txt
