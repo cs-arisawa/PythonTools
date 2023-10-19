@@ -6,6 +6,7 @@ setup(
     packages=find_packages(),
     install_requires=[
         'Pillow',
-        'tkinterdnd2'
+        'tkinterdnd2',
+        'opencv-python'
     ],
 )
