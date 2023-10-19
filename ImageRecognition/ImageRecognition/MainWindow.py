@@ -26,10 +26,10 @@ class MainWindow(TkinterDnD.Tk):
         self.geometry(windowsize)  # 幅x高さの形式で指定
         
         # 画像を表示するゾーンの設定
-        self.labelFrame = tk.LabelFrame(self, width=400, height=400, text="画像をドラッグ&ドロップ", labelanchor="n")
+        self.labelFrame = tk.LabelFrame(self, width=windowWidth/2, height=windowHeight/2, text="画像をドラッグ&ドロップ", labelanchor="n")
         self.labelFrame.drop_target_register(DND_FILES)
         self.labelFrame.dnd_bind('<<Drop>>', self.funcDragAndDrop)
-        self.labelFrame.pack()
+        self.labelFrame.pack(fill='x')
     
     def funcDragAndDrop(self, event):
         # ファイル名にスペースがあると{$path}で返却される
