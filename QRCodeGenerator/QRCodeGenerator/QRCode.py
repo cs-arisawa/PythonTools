@@ -20,7 +20,7 @@ class QRCode(object):
         qr.make(fit=True)
 
         img = qr.make_image(fill_color="black", back_color="white")
-        imgPath = "../png/" + filename
+        imgPath = "png/" + filename
         
         img.save(imgPath)
         print("pingfilename=" + filename + " path=" + imgPath)
