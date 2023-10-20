@@ -1,4 +1,4 @@
-from . import MainWindow
+from QRCodeGenerator import MainWindow
 
 if __name__ == '__main__':
     MainWindow.start()
