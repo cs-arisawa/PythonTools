@@ -1,5 +1,0 @@
-Metadata-Version: 2.1
-Name: ImageRecognition
-Version: 0.1.0
-Requires-Dist: Pillow
-Requires-Dist: tkinterdnd2

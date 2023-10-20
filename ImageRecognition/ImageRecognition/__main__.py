@@ -1,5 +1,4 @@
-from . import MainWindow
+from ImageRecognition import MainWindow
 
 if __name__ == '__main__':
-    mainWindow = MainWindow.MainWindow()
-    mainWindow.mainloop()
+    MainWindow.start()

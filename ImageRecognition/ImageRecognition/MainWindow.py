@@ -1,57 +1,37 @@
 import tkinter as tk
-from tkinter import font
-from tkinter import filedialog
+from tkinter import font, Canvas
 from PIL import Image, ImageTk
 import pathlib
 from tkinterdnd2 import DND_FILES, TkinterDnD
 from . import config
-    
-class MainWindow(TkinterDnD.Tk):
-    def __init__(self):
-        super().__init__()
-        
-        # 画像が表示されているかどうか管理するフラグ
-        # 表示されている場合 -> True
-        # 表示されていない場合 -> False
-        self.flag = False
-        
-        # ウィンドウの生成
-        self.title("画像認識")
-        
-        # ウィンドウ設定
-        # ウィンドウのサイズを指定
-        windowWidth = config['mainwindow_width']
-        windowHeight = config['mainwindow_height']
-        windowsize = (str(windowWidth) + "x" + str(windowHeight))
-        self.geometry(windowsize)  # 幅x高さの形式で指定
-        
-        # 画像を表示するゾーンの設定
-        self.labelFrame = tk.LabelFrame(self, width=windowWidth/2, height=windowHeight/2, text="画像をドラッグ&ドロップ", labelanchor="n")
-        self.labelFrame.drop_target_register(DND_FILES)
-        self.labelFrame.dnd_bind('<<Drop>>', self.funcDragAndDrop)
-        self.labelFrame.pack(fill='x')
-    
-    def funcDragAndDrop(self, event):
-        # ファイル名にスペースがあると{$path}で返却される
-        # 参考：https://juu7g.hatenablog.com/entry/Python/csv/viewer
-        self.path = event.data
-        # 画像を表示
-        self.load_image_drog_and_drop()
-    
-    #画像表示
-    def load_image_drog_and_drop(self):
+from . import FeatureKeypoint as fk
 
-        if self.flag:
-            self.clear_image()
+def drop(event):
+    global display_image, canvas
+    canvas.delete("image")
+    img = Image.open(event.data)
+    display_image = ImageTk.PhotoImage(img)
+    canvas.create_image(0, 0, image = display_image, anchor = "nw")
+    return event.action
 
-        file_path = self.path
-        image = Image.open(open(file_path, 'rb'))
-        # アスペクトを維持しながら、指定したサイズ以下に画像を縮小
-        image.thumbnail((400, 400))
-        photoImage = ImageTk.PhotoImage(image)
-        # 画像を表示
-        self.image_label = tk.Label(self.labelFrame, image=photoImage)
-        self.image_label.image = photoImage
-        self.image_label.pack()
+def start():
+    # メインウィンドウの生成
+    display_image = None
+    root = TkinterDnD.Tk()
+    
+    windowWidth = root.winfo_screenwidth()
+    windowheight = root.winfo_screenheight()
+    windowSize = str(windowWidth) + "x" + str(windowheight)
+    root.geometry(windowSize)
+    root.title('画像認識')
+    root.drop_target_register(DND_FILES)
+    root.dnd_bind('<<Drop>>', drop)
+    
+    
+    # Canvasウィジェットの生成
+    global canvas
+    canvas = Canvas(root, width=640, height=480, )
+    # ウィジェットの配置
+    canvas.pack()
 
-        self.flag = True
+    root.mainloop()
