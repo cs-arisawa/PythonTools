@@ -3,8 +3,8 @@
 ## 初回起動時
 必要なパッケージをインストールするため、以下のコマンドをコマンドプロンプトで実行する
 ```
-cd (PythonToolsへのパス)\ImageRecognition
-pip install ImageRecognition
+cd (PythonToolsへのパス)
+pip install ./ImageRecognition
 ```
 
 ## アプリの起動
