@@ -3,6 +3,7 @@ from tkinter import filedialog, font
 from . import FeatureKeypoint as fk
 from functools import partial
 from . import config
+from . import OperateImage as oi
 root = tk.Tk()
 
 # ボタンとテキストボックスを関連付ける辞書
@@ -14,6 +15,11 @@ def select_folder(event=None, key=None):
     folder_path = filedialog.askdirectory()
     if folder_path:
         dic[key].set(folder_path)
+
+def click_rec_button(event=None):
+    oi.set_operate_image_by_folders(dic)
+    oi.print_images()
+
 
 def start():
     # メインウィンドウの生成
@@ -36,10 +42,15 @@ def start():
     dir2_button.bind('<Button-1>', partial(select_folder, key='Directory2'))
     dir2_path_box = tk.Label(root, textvariable=dir2_path)
 
+    # 類似度計算ボタンの作成
+    rec_button = tk.Button(root, text='類似度計算', font=labelFont)
+    rec_button.bind('<Button-1>', partial(click_rec_button))
+
     # 配置
     dir1_button.grid(row=0, column=0, padx=10, pady=10, sticky="w")
     dir1_path_box.grid(row=1, column=0, padx=10, pady=10, sticky="w")
     dir2_button.grid(row=2, column=0, padx=10, pady=10, sticky="w")
     dir2_path_box.grid(row=3, column=0, padx=10, pady=10, sticky="w")
+    rec_button.grid(row=4, column=0, columnspan=2, padx=10, pady=10, sticky="w")
 
     root.mainloop()
