@@ -1,6 +1,6 @@
 {
-	"mainwindow_width": 600,
-	"mainwindow_height": 900,
+	"mainwindow_width": 500,
+	"mainwindow_height": 450,
 	"labelfont_family": "Impact",
-	"labelfont_size": 20
+	"labelfont_size": 10
 }
