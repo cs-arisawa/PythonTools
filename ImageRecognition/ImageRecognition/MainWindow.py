@@ -11,16 +11,37 @@ dir1_path = tk.StringVar()
 dir2_path = tk.StringVar()
 dic = {'Directory1': dir1_path, 'Directory2': dir2_path}
 
+# エラーメッセージ用
+error_text = tk.StringVar()
+
+# テキストのリスト
+text_list = []
+
 def select_folder(event=None, key=None):
     folder_path = filedialog.askdirectory()
     if folder_path:
         dic[key].set(folder_path)
 
 def click_rec_button(event=None):
-    oi.set_operate_image_by_folders(dic)
-    oi.print_images()
+    global error_text
+    flag = False
+    error_str = ""
+    for key, value in dic.items():
+        if value.get() == "":
+            error_str += str(key) + " "
+            flag = True
+    
+    if flag:
+        error_str += "を設定してください"
+        error_text.set(error_str)
+    else:
+        error_text.set("")
+        oi.set_operate_image_by_folders(dic)
+        oi.print_images()
 
-
+def click_clear_button(event=None):
+    [string_var.set("") for string_var in text_list]
+    
 def start():
     # メインウィンドウの生成
     windowWidth = config['mainwindow_width']
@@ -32,25 +53,44 @@ def start():
     # ラベルのフォント設定
     labelFont = font.Font(family=config['labelfont_family'], size=config['labelfont_size'])
 
+    # エラー表示用テキストボックスの作成
+    error_label = tk.Label(root, textvariable=error_text)
+    text_list.append(error_text)
+    error_label.config(foreground="red")
+
     # directory1のボタンとテキストボックスの作成
     dir1_button = tk.Button(root, text='Directory1', font=labelFont)
     dir1_button.bind('<Button-1>', partial(select_folder, key='Directory1'))
-    dir1_path_box = tk.Label(root, textvariable=dir1_path)
+    dir1_path_box = tk.Label(root, textvariable=dir1_path, background="white")
+    text_list.append(dir1_path)
 
     # directory2のボタンとテキストボックスの作成
     dir2_button = tk.Button(root, text='Directory2', font=labelFont)
     dir2_button.bind('<Button-1>', partial(select_folder, key='Directory2'))
-    dir2_path_box = tk.Label(root, textvariable=dir2_path)
+    dir2_path_box = tk.Label(root, textvariable=dir2_path, background="white")
+    text_list.append(dir2_path)
+
+    # ボタン用Frame
+    button_frame = tk.Frame(root)
 
     # 類似度計算ボタンの作成
-    rec_button = tk.Button(root, text='類似度計算', font=labelFont)
+    rec_button = tk.Button(button_frame, text='類似度計算', font=labelFont)
     rec_button.bind('<Button-1>', partial(click_rec_button))
 
+    # クリアボタンの作成
+    clear_button = tk.Button(button_frame, text="クリア", font=labelFont)
+    clear_button.bind('<Button-1>', partial(click_clear_button))
+
+
     # 配置
-    dir1_button.grid(row=0, column=0, padx=10, pady=10, sticky="w")
-    dir1_path_box.grid(row=1, column=0, padx=10, pady=10, sticky="w")
-    dir2_button.grid(row=2, column=0, padx=10, pady=10, sticky="w")
-    dir2_path_box.grid(row=3, column=0, padx=10, pady=10, sticky="w")
-    rec_button.grid(row=4, column=0, columnspan=2, padx=10, pady=10, sticky="w")
+    error_label.pack(anchor="w")
+    dir1_button.pack(anchor="w", padx=10, pady=10)
+    dir1_path_box.pack(anchor="w", fill="x", padx=10, pady=10)
+    dir2_button.pack(anchor="w", padx=10, pady=10)
+    dir2_path_box.pack(anchor="w", fill="x", padx=10, pady=10)
+
+    rec_button.pack(side="left", padx=10, pady=10)
+    clear_button.pack(side="left", padx=10, pady=10)
+    button_frame.pack(anchor="w")
 
     root.mainloop()
