@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import filedialog, font
+from tkinter import filedialog, font, ttk
 from . import FeatureKeypoint as fk
 from functools import partial
 from . import config
@@ -16,6 +16,9 @@ error_text = tk.StringVar()
 
 # テキストのリスト
 text_list = []
+
+# コンボボックスの設定値
+combo_var = tk.StringVar()
 
 def select_folder(event=None, key=None):
     folder_path = filedialog.askdirectory()
@@ -36,11 +39,12 @@ def click_rec_button(event=None):
         error_text.set(error_str)
     else:
         error_text.set("")
-        oi.set_operate_image_by_folders(dic)
+        oi.set_operate_image_by_folders(dic, combo_var.get())
         oi.print_images()
 
 def click_clear_button(event=None):
     [string_var.set("") for string_var in text_list]
+
     
 def start():
     # メインウィンドウの生成
@@ -73,6 +77,11 @@ def start():
     # ボタン用Frame
     button_frame = tk.Frame(root)
 
+    # imageファイルのソートの仕方を設定するcombobox作成
+    sort_options = [config['sort_type'][0], config['sort_type'][1]]
+    sort_combobox = ttk.Combobox(button_frame, textvariable=combo_var, values=sort_options, state="readonly")
+    sort_combobox.set(sort_options[0])
+
     # 類似度計算ボタンの作成
     rec_button = tk.Button(button_frame, text='類似度計算', font=labelFont)
     rec_button.bind('<Button-1>', partial(click_rec_button))
@@ -89,6 +98,7 @@ def start():
     dir2_button.pack(anchor="w", padx=10, pady=10)
     dir2_path_box.pack(anchor="w", fill="x", padx=10, pady=10)
 
+    sort_combobox.pack(side="left", padx=10, pady=10)
     rec_button.pack(side="left", padx=10, pady=10)
     clear_button.pack(side="left", padx=10, pady=10)
     button_frame.pack(anchor="w")

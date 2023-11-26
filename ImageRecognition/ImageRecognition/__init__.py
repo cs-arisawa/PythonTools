@@ -4,5 +4,5 @@ import json
 # config フォルダ内の config.json を読み込む
 config_file_path = "config/config.json"
 
-with open(config_file_path) as jsonFile:
+with open(config_file_path, encoding='utf-8') as jsonFile:
     config = json.load(jsonFile)

@@ -2,5 +2,6 @@
 	"mainwindow_width": 500,
 	"mainwindow_height": 450,
 	"labelfont_family": "Impact",
-	"labelfont_size": 10
+	"labelfont_size": 10,
+	"sort_type" : ["名前順", "日付順"]
 }
