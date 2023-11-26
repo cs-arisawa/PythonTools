@@ -41,6 +41,7 @@ def click_rec_button(event=None):
         error_text.set("")
         oi.set_operate_image_by_folders(dic, combo_var.get())
         oi.print_images()
+        oi.calculate_similarity()
 
 def click_clear_button(event=None):
     [string_var.set("") for string_var in text_list]

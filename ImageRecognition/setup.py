@@ -4,6 +4,7 @@ setup(
     name='ImageRecognition',
     version='0.1.0',
     install_requires=[
+        'scikit-image',
         'Pillow',
         'tkinterdnd2',
         'opencv-python'
